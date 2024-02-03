@@ -245,18 +245,20 @@ def main():
     else:
         startnumerator = read_integer("Enter start numerator:")
     if len(sys.argv) > 2:
-        endnumerator = int(sys.argv[2])
+        endnumerator = int(sys.argv[2]) + 1
     else:
         endnumerator = read_integer("Enter end numerator:")
+        endnumerator += 1 
     if len(sys.argv) > 3:
         startdenominator = int(sys.argv[3])
     else:
         startdenominator = read_integer("Enter start denominator:")
     if len(sys.argv) > 4:
-        enddenominator = int(sys.argv[4])
+        enddenominator = int(sys.argv[4]) + 1
     else:
         enddenominator = read_integer("Enter end denominator:")
-
+        enddenominator += 1
+        
     if len(sys.argv) > 5:
         if '.' in sys.argv[5]:
             grepfloat = float(sys.argv[5])  
