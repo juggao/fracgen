@@ -38,7 +38,6 @@ def generate_fractions_o_e(startnumerator, endnumerator, startdenominator, endde
                     fractions.append((i, j))
     return fractions
 
-
 def is_whole_number(num):
     return num.is_integer()
 
@@ -241,13 +240,13 @@ def grep_decimal(d, number_to_find, num_decimals):
 
 
 def main():
+    grepnum = 0
+    grepfloat = 0
     startnumerator = 0
     startdenominator = 0
     endnumerator = 0
     enddenominator = 0
-    grepfloat = 0
-    grepnum = 0
-
+    
     if len(sys.argv) > 1:
         startnumerator = int(sys.argv[1])
     else:
@@ -274,13 +273,11 @@ def main():
   
     print(f"startnumerator: {startnumerator} endnumerator: {endnumerator} startdenominator: {startdenominator} enddenominator: {enddenominator}  grepfloat: {grepfloat}")
 
-
     getcontext().prec = 50  # Adjust the precision as needed
     mpmath.mp.dps = 50  # Set the precision to 50 digits
 
-    fractions = generate_fractions_e_o(startnumerator, endnumerator, startdenominator, enddenominator)
+    fractions = generate_fractions_o_e(startnumerator, endnumerator, startdenominator, enddenominator)
 
-    
     for fraction in fractions:
 
         # Initialize a Decimal with a fraction
