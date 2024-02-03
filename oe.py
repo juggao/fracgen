@@ -2,16 +2,8 @@
 # Generates fractions and writes its decimals
 # (c) 2024 Rene Oudeweg
 #
-# python eo.py [maxnumerator] [startnumerator (even)] [startdenominator (odd)] optional: [float to search]
+# python eo.py [startnumerator (odd)] [endnumerator] [startdenominator (even)] [enddenominator] optional: [float to search]
 
-# example:
-#
-# reinold@fedora:~/Projects/evenodd$ python eo.py 4000 4 1 3.14
-# grepfloat: 3.14
-# 22/7  	= 3.1428571428571428571428571428571428571428571428571
-# 66/21  	= 3.1428571428571428571428571428571428571428571428571
-# 110/35  	= 3.1428571428571428571428571428571428571428571428571
-# 148/47  	= 3.1489361702127659574468085106382978723404255319149
 
 from termcolor import colored
 from fractions import Fraction
