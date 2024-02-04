@@ -9,6 +9,7 @@ from termcolor import colored
 from fractions import Fraction
 import sys
 
+PRECISION = 16
 
 def generate_fractions_e_o(startnumerator, endnumerator, startdenominator, enddenominator):
     fractions = []
@@ -101,7 +102,7 @@ import mpmath
 
 def is_decimal_integer(decimal_number):
     # Set the precision for the Decimal module
-    getcontext().prec = 50  # Adjust the precision as needed
+    getcontext().prec = PRECISION  # Adjust the precision as needed
 
     # Check if the Decimal is equal to its integer representation
     return decimal_number == decimal_number.to_integral_value()
@@ -109,7 +110,7 @@ def is_decimal_integer(decimal_number):
 
 def has_repeating_fractional_digits_2(number):
     # Set the precision for the Decimal module
-    getcontext().prec = 50  # Adjust the precision as needed
+    getcontext().prec = PRECISION  # Adjust the precision as needed
 
     # Convert the Decimal to a string
     number_str = str(Decimal(str(number)))
@@ -131,7 +132,7 @@ def has_repeating_fractional_digits_2(number):
 
 def has_repeating_fractional_digits_3(number):
     # Set the precision for the Decimal module
-    getcontext().prec = 50  # Adjust the precision as needed
+    getcontext().prec = PRECISION  # Adjust the precision as needed
 
     # Convert the Decimal to a string
     number_str = str(Decimal(str(number)))
@@ -267,8 +268,8 @@ def main():
   
     print(f"startnumerator: {startnumerator} endnumerator: {endnumerator} startdenominator: {startdenominator} enddenominator: {enddenominator}  grepfloat: {grepfloat}")
 
-    getcontext().prec = 50  # Adjust the precision as needed
-    mpmath.mp.dps = 50  # Set the precision to 50 digits
+    getcontext().prec = PRECISION  # Adjust the precision as needed
+    mpmath.mp.dps = PRECISION  # Set the precision to 50 digits
 
     fractions = generate_fractions_o_e(startnumerator, endnumerator, startdenominator, enddenominator)
 

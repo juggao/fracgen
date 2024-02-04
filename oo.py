@@ -9,7 +9,7 @@ from termcolor import colored
 from fractions import Fraction
 import sys
 
-PRECISION = 16
+PRECISION=16
 
 def generate_fractions_e_o(startnumerator, endnumerator, startdenominator, enddenominator):
     fractions = []
@@ -28,6 +28,16 @@ def generate_fractions_o_e(startnumerator, endnumerator, startdenominator, endde
         if i % 2 != 0:
             for j in range(startdenominator,enddenominator):
                 if j % 2 == 0:
+                    fractions.append((i, j))
+    return fractions
+
+def generate_fractions_o_o(startnumerator, endnumerator, startdenominator, enddenominator):
+    fractions = []
+    for i in range(startnumerator, endnumerator):
+        # Check if i is even
+        if i % 2 != 0:
+            for j in range(startdenominator,enddenominator):
+                if j % 2 != 0:
                     fractions.append((i, j))
     return fractions
 
@@ -133,7 +143,7 @@ def has_repeating_fractional_digits_2(number):
 
 def has_repeating_fractional_digits_3(number):
     # Set the precision for the Decimal module
-    getcontext().prec = PRECISION  # Adjust the precision as needed
+    getcontext().prec = 50  # Adjust the precision as needed
 
     # Convert the Decimal to a string
     number_str = str(Decimal(str(number)))
@@ -273,7 +283,7 @@ def main():
     getcontext().prec = PRECISION  # Adjust the precision as needed
     mpmath.mp.dps = PRECISION  # Set the precision to 50 digits
 
-    fractions = generate_fractions_e_o(startnumerator, endnumerator, startdenominator, enddenominator)
+    fractions = generate_fractions_o_o(startnumerator, endnumerator, startdenominator, enddenominator)
 
     
     for fraction in fractions:
