@@ -13,8 +13,15 @@ PRECISION = 100
 #MASKDIGITS = ['1','2','3', '4','5','6','7','8','9','0']
 MASKDIGITS = []
 BLINKDIGITS = []
-MODE='oo'
+MODE='all'
 primes = []
+
+def generate_fractions(startnumerator, endnumerator, startdenominator, enddenominator):
+    fractions = []
+    for i in range(startnumerator, endnumerator):
+        for j in range(startdenominator, enddenominator):
+            fractions.append((i, j))
+    return fractions
 
 def generate_fractions_e_o(startnumerator, endnumerator, startdenominator, enddenominator):
     fractions = []
@@ -394,6 +401,8 @@ def main():
         fractions = generate_fractions_e_e(startnumerator, endnumerator, startdenominator, enddenominator)
     elif MODE == 'oo':
         fractions = generate_fractions_o_o(startnumerator, endnumerator, startdenominator, enddenominator)
+    elif MODE == 'all':
+        fractions = generate_fractions(startnumerator, endnumerator, startdenominator, enddenominator)
     elif MODE == 'ep':
         primes = generate_primes(enddenominator)
         fractions = generate_fractions_e_p(startnumerator, endnumerator, primes)
