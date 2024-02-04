@@ -9,29 +9,32 @@ from termcolor import colored
 from fractions import Fraction
 import sys
 
-PRECISION = 100
-#MASKDIGITS = ['1','2','3', '4','5','6','7','8','9','0']
-MASKDIGITS = []
-BLINKDIGITS = []
+PRECISION = 16
 
-def generate_fractions_e_o(startnumerator, endnumerator, startdenominator, enddenominator):
-    fractions = []
-    for i in range(startnumerator, endnumerator):
-        # Check if i is even
-        if i % 2 == 0:
-            for j in range(startdenominator, enddenominator):
-                if j % 2 != 0:
-                    fractions.append((i, j))
-    return fractions
+def generate_primes(limit):
+    primes = []
+    is_prime = [True] * (limit + 1)
+    
+    for num in range(2, int(limit**0.5) + 1):
+        if is_prime[num]:
+            primes.append(num)
+            for multiple in range(num*num, limit + 1, num):
+                is_prime[multiple] = False
+    
+    for num in range(max(2, int(limit**0.5) + 1), limit + 1):
+        if is_prime[num]:
+            primes.append(num)
+    
+    return primes
 
-def generate_fractions_o_e(startnumerator, endnumerator, startdenominator, enddenominator):
+
+
+def generate_fractions_p_e(primes, startdenominator, enddenominator):
     fractions = []
-    for i in range(startnumerator, endnumerator):
-        # Check if i is even
-        if i % 2 != 0:
-            for j in range(startdenominator,enddenominator):
-                if j % 2 == 0:
-                    fractions.append((i, j))
+    for i in primes:
+        for j in range(startdenominator, enddenominator):
+            if j % 2 == 0:
+                fractions.append((i, j))
     return fractions
 
 
@@ -151,7 +154,7 @@ def has_repeating_fractional_digits_3(number):
                 return True
     return False
 
-def print_fractional_digits_with_color(number, greppattern):
+def print_fractional_digits_with_color(number):
     # Convert the number to a string
     number_str = str(number)
 
@@ -165,34 +168,14 @@ def print_fractional_digits_with_color(number, greppattern):
     for digit in integer_part:
         print(colored(digit, 'white', attrs=['bold']), end='')
     print('.', end='')
-
-    index = fractional_str.find(greppattern)
-    greplen = len(greppattern)
-    indexstop = index+greplen-1
-
-    n = 0
     # Print each digit with a different color
     for digit in fractional_str:
         color = 'white' if digit == '0' else 'light_green' if digit == '1' else 'light_yellow' if digit == '2' else 'light_blue' if digit == '3' else 'light_magenta' if digit == '4' else 'light_cyan' if digit == '5' else 'white' if digit == '6' else 'light_grey' if digit == '7' else 'white' if digit == '8' else 'red'
-        if digit in MASKDIGITS:
-            print(' ', end='')
+        if digit=='7':
+            print(colored(digit, color, attrs=['bold']), end='') 
         else:
-            if n >= index and n <= indexstop:
-                print(colored(digit, color, attrs=['bold', 'blink']), end='') 
-            else:    
-                if digit in BLINKDIGITS:
-                    print(colored(digit, color, attrs=['bold', 'blink']), end='') 
-                else:
-                    if digit=='7':
-                        print(colored(digit, color, attrs=['bold']), end='') 
-                    else:
-                        print(colored(digit, color), end='')      
-            
-        if n > indexstop:
-            index = fractional_str.find(greppattern,n+2)
-            if index != 0:
-                indexstop = index+greplen-1
-        n += 1
+            print(colored(digit, color), end='')
+        
 
 def compare_float_and_decimal(float_value, decimal_value):
     # Convert the float to Decimal for consistent comparison
@@ -296,7 +279,8 @@ def main():
     getcontext().prec = PRECISION  # Adjust the precision as needed
     mpmath.mp.dps = PRECISION  # Set the precision to 50 digits
 
-    fractions = generate_fractions_e_o(startnumerator, endnumerator, startdenominator, enddenominator)
+    primes = generate_primes(enddenominator)
+    fractions = generate_fractions_p_e(primes, startdenominator, enddenominator)
 
     
     for fraction in fractions:
@@ -314,13 +298,13 @@ def main():
             result = compare_digit_by_digit_float_and_decimal(grepfloat, num)
             if (result=="Equal"):
                 print(f"{fraction[0]}/{fraction[1]}  \t= ", end='')
-                print_fractional_digits_with_color(num, str(grepfloat))
+                print_fractional_digits_with_color(num)
                 print()
             continue
         if (grepnum!=0):
             if grep_decimal(num, grepnum, len(str(grepnum))):
                 print(f"{fraction[0]}/{fraction[1]}  \t= ", end='')
-                print_fractional_digits_with_color(num, str(grepnum))
+                print_fractional_digits_with_color(num)
                 print()
                 continue
         elif (grepnum==0):    
@@ -328,7 +312,7 @@ def main():
                 print(f"{fraction[0]}/{fraction[1]}  \t= " +  colored(str(num), "red", attrs=["bold"]))
             else:
                 print(f"{fraction[0]}/{fraction[1]}  \t= ", end='')
-                print_fractional_digits_with_color(num, '')
+                print_fractional_digits_with_color(num)
                 print()
     print("\n\n")
 
