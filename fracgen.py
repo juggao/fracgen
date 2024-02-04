@@ -266,7 +266,7 @@ def print_fractional_digits_with_color(number, greppattern):
         if digit in MASKDIGITS:
             print(' ', end='')
         else:
-            if n >= index and n <= indexstop:
+            if n >= index and n < indexstop:
                 print(colored(digit, color, attrs=['bold', 'blink']), end='') 
             else:    
                 if digit in BLINKDIGITS:
@@ -277,8 +277,8 @@ def print_fractional_digits_with_color(number, greppattern):
                     else:
                         print(colored(digit, color), end='')      
             
-        if n > indexstop:
-            index = fractional_str.find(greppattern,n+2)
+        if n == indexstop:
+            index = fractional_str.find(greppattern,n+1)
             if index != 0:
                 indexstop = index+greplen-1
         n += 1
